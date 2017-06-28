@@ -18,8 +18,8 @@ import java.util.LinkedList;
 
 public class StickerPad extends View {
 
-    private LinkedList<Sticker> mElements = new LinkedList<>();
-    private Sticker mSelectedElement;
+    private LinkedList<StickerElement> mElements = new LinkedList<>();
+    private StickerElement mSelectedElement;
 
     public StickerPad(Context context) {
         super(context);
@@ -33,7 +33,7 @@ public class StickerPad extends View {
         super(context, attrs, defStyleAttr);
     }
 
-    public void addElement(Sticker element) {
+    public void addElement(StickerElement element) {
         element.setCallback(this);
         mElements.add(element);
         if (mSelectedElement != null) {
@@ -52,10 +52,10 @@ public class StickerPad extends View {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            Sticker selectElement = null;
-            Iterator<Sticker> iterator = mElements.descendingIterator();
+            StickerElement selectElement = null;
+            Iterator<StickerElement> iterator = mElements.descendingIterator();
             while (iterator.hasNext()) {
-                Sticker element = iterator.next();
+                StickerElement element = iterator.next();
                 if (element.isHit(event.getX(), event.getY())) {
                     selectElement = element;
                     break;
@@ -79,7 +79,7 @@ public class StickerPad extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        for (Sticker el : mElements) {
+        for (StickerElement el : mElements) {
             el.draw(canvas);
         }
     }

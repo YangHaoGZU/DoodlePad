@@ -9,10 +9,10 @@ import android.view.MotionEvent;
 
 /**
  * Created by yanghao on 2017/6/28.
- * 可以变换
+ * 可以旋转缩放的贴纸
  */
 
-public abstract class TransformSticker extends Sticker {
+public abstract class TransformSticker extends StickerElement {
     private static final float DEFAULT_ACTION_RADIUS_DP = 10.0f;
 
     private static final int TOUCH_MODE_NON = 0;

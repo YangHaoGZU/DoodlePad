@@ -17,9 +17,9 @@ import android.view.MotionEvent;
 
 /**
  * Created by yanghao on 2017/6/28.
- * 涂鸦的元素。
+ * 贴纸元素。
  */
-public abstract class Sticker extends Drawable {
+public abstract class StickerElement extends Drawable {
     private static final int DEFAULT_PAINT_COLOR = Color.parseColor("#f2a670");
     private static final float DEFAULT_STROKE_WIDTH_DP = 1.0f;
 
@@ -43,7 +43,7 @@ public abstract class Sticker extends Drawable {
     // Element是否被选中
     private boolean mSelected = false;
 
-    public Sticker(Resources res, float x, float y) {
+    public StickerElement(Resources res, float x, float y) {
         mStrokeWidth = ViewUtils.dp2px(res, DEFAULT_STROKE_WIDTH_DP);
 
         mPosX = x;
@@ -70,12 +70,19 @@ public abstract class Sticker extends Drawable {
      */
     protected abstract void onDraw(Canvas canvas);
 
+    public abstract int getIntrinsicWidth();
+
+    public abstract int getIntrinsicHeight();
+
     public boolean onTouchEvent(MotionEvent event) {
         return false;
     }
 
     @Override
     public void draw(@NonNull Canvas canvas) {
+        if (!isVisible()) {
+            return;
+        }
         canvas.save();
         canvas.scale(mScale, mScale, getBounds().centerX(), getBounds().centerY());
         canvas.rotate(mRotate, getBounds().centerX(), getBounds().centerY());

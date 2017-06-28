@@ -7,16 +7,31 @@
     android:layout_height="match_parent"
     tools:context="com.yanghao123.doodlepad.MainActivity">
 
-    <com.yanghao123.stickerPad.DoodleContainer
+    <com.yanghao123.stickerPad.StickerPad
         android:id="@+id/doodle_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
-    <Button
-        android:id="@+id/add_test"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="加一个测试的"
-        />
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/add_drawable"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="贴纸"
+            />
+        <Button
+            android:id="@+id/add_doodle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="涂鸦"
+            />
+    </LinearLayout>
+
 </RelativeLayout>
