@@ -20,6 +20,7 @@ public class StickerPad extends View {
 
     private LinkedList<StickerElement> mElements = new LinkedList<>();
     private StickerElement mSelectedElement;
+    private Class mFilterClass;
 
     public StickerPad(Context context) {
         super(context);
@@ -44,6 +45,14 @@ public class StickerPad extends View {
         invalidate();
     }
 
+    /**
+     * 过滤 Element
+     * 设置过滤后，只有指定类型的Element才能被选中
+     */
+    public <E extends StickerElement> void filterElement(Class<E> clazz) {
+        mFilterClass = clazz;
+    }
+
     @Override
     protected boolean verifyDrawable(@NonNull Drawable who) {
         return mElements.contains(who) || super.verifyDrawable(who);
@@ -56,7 +65,8 @@ public class StickerPad extends View {
             Iterator<StickerElement> iterator = mElements.descendingIterator();
             while (iterator.hasNext()) {
                 StickerElement element = iterator.next();
-                if (element.isHit(event.getX(), event.getY())) {
+                if ((mFilterClass == null || mFilterClass.isAssignableFrom(element.getClass()))
+                        && element.isHit(event.getX(), event.getY())) {
                     selectElement = element;
                     break;
                 }

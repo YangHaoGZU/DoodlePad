@@ -23,6 +23,8 @@ public abstract class StickerElement extends Drawable {
     private static final int DEFAULT_PAINT_COLOR = Color.parseColor("#f2a670");
     private static final float DEFAULT_STROKE_WIDTH_DP = 1.0f;
 
+    private Resources mRes;
+
     // Element的画笔，目前只是用来画边框
     private Paint mPaint;
     // 边框宽度
@@ -44,6 +46,8 @@ public abstract class StickerElement extends Drawable {
     private boolean mSelected = false;
 
     public StickerElement(Resources res, float x, float y) {
+        mRes = res;
+
         mStrokeWidth = ViewUtils.dp2px(res, DEFAULT_STROKE_WIDTH_DP);
 
         mPosX = x;
@@ -89,7 +93,9 @@ public abstract class StickerElement extends Drawable {
         if (mSelected) {
             //当画布缩放时，rect的线条也会缩放，但我们期望缩放时线条的粗细并不发生变化
             mPaint.setStrokeWidth(mStrokeWidth / mScale);
+            getBounds().inset(-1, -1);
             canvas.drawRect(getBounds(), mPaint);
+            getBounds().inset(1, 1);
         }
         onDraw(canvas);
         canvas.restore();
@@ -153,8 +159,12 @@ public abstract class StickerElement extends Drawable {
         return !getBounds().isEmpty() && getBounds().contains((int) pts[0], (int) pts[1]);
     }
 
-    Matrix getMatrix() {
+    protected Matrix getMatrix() {
         return mInvertMatrix;
+    }
+
+    public Resources getResource() {
+        return mRes;
     }
 
     public float getScale() {
